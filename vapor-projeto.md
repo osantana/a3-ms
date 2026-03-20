@@ -6,11 +6,9 @@ Desenvolvimento de uma plataforma web de comércio eletrônico voltada à venda,
 
 ## Descrição do Projeto
 
-O **Vapor** é uma aplicação web que permite a compra, venda e download de jogos digitais. A plataforma conecta duas categorias de usuários: **jogadores**, que navegam por um catálogo, compram títulos e gerenciam sua biblioteca pessoal; e **publicadores**, que cadastram, precificam e distribuem seus jogos.
+O **Vapor** é uma aplicação web que permite a compra, venda e download de jogos digitais. A plataforma conecta duas categorias de usuários: **jogadores**, que navegam por um catálogo, compram títulos e gerenciam sua biblioteca pessoal; e **criadores**, que cadastram, precificam e distribuem seus jogos.
 
 O sistema contempla funcionalidades essenciais de uma loja digital: catálogo com busca e filtros, carrinho de compras, processamento de pagamentos, biblioteca pessoal com histórico de compras e gerenciamento de downloads, além de um sistema de avaliações e um painel administrativo para moderação de conteúdo.
-
----
 
 ## Análise de Requisitos
 
@@ -31,7 +29,7 @@ O sistema contempla funcionalidades essenciais de uma loja digital: catálogo co
 ---
 
 **RF-03 — Perfis de acesso**
-> O sistema deve distinguir três perfis: Jogador, Publicador e Administrador.
+> O sistema deve distinguir três perfis: Jogador, Criador e Administrador.
 >
 > Prioridade: Essencial
 
@@ -114,22 +112,22 @@ O sistema contempla funcionalidades essenciais de uma loja digital: catálogo co
 
 ---
 
-**RF-15 — Cadastro de jogos (publicador)**
-> O sistema deve permitir que publicadores cadastrem novos jogos com metadados, mídias e arquivos de instalação.
+**RF-15 — Cadastro de jogos (criador)**
+> O sistema deve permitir que criadores cadastrem novos jogos com metadados, mídias e arquivos de instalação.
 >
 > Prioridade: Essencial
 
 ---
 
 **RF-16 — Gerenciamento de preços**
-> O sistema deve permitir que publicadores definam e alterem o preço de seus jogos, incluindo promoções.
+> O sistema deve permitir que criadores definam e alterem o preço de seus jogos, incluindo promoções.
 >
 > Prioridade: Essencial
 
 ---
 
-**RF-17 — Painel de vendas (publicador)**
-> O sistema deve exibir ao publicador métricas de vendas: unidades vendidas, receita e avaliações.
+**RF-17 — Painel de vendas (criador)**
+> O sistema deve exibir ao criador métricas de vendas: unidades vendidas, receita e avaliações.
 >
 > Prioridade: Importante
 
@@ -272,12 +270,12 @@ O sistema contempla funcionalidades essenciais de uma loja digital: catálogo co
 ---
 
 **RN-05 — Split de receita**
-> O publicador recebe 70% do valor líquido de cada venda; os 30% restantes são retidos pela plataforma.
+> O criador recebe 70% do valor líquido de cada venda; os 30% restantes são retidos pela plataforma.
 
 ---
 
 **RN-06 — Aprovação de jogos**
-> Jogos cadastrados por publicadores ficam com status "Em análise" até aprovação do administrador.
+> Jogos cadastrados por criadores ficam com status "Em análise" até aprovação do administrador.
 
 ---
 
@@ -340,7 +338,7 @@ Critérios de aceitação:
 > Como jogador, quero ver a página de detalhes de um jogo, para decidir se quero comprá-lo.
 
 Critérios de aceitação:
-- Exibição de: descrição, screenshots/trailer, gêneros, data de lançamento, publicador, requisitos de sistema, preço e avaliações.
+- Exibição de: descrição, screenshots/trailer, gêneros, data de lançamento, criador, requisitos de sistema, preço e avaliações.
 - Botão "Adicionar ao Carrinho" visível (ou "Na Biblioteca" se já adquirido).
 
 ---
@@ -426,10 +424,10 @@ Critérios de aceitação:
 
 ---
 
-### Publicador
+### Criador
 
 **US-14 — Cadastrar um jogo**
-> Como publicador, quero cadastrar um novo jogo na plataforma, para disponibilizá-lo para venda.
+> Como criador, quero cadastrar um novo jogo na plataforma, para disponibilizá-lo para venda.
 
 Critérios de aceitação:
 - Formulário com: título, descrição, gêneros, plataformas suportadas, requisitos de sistema, mídia (screenshots, trailer) e arquivo de instalação.
@@ -439,7 +437,7 @@ Critérios de aceitação:
 ---
 
 **US-15 — Definir e alterar preço**
-> Como publicador, quero definir e alterar o preço do meu jogo, para adequá-lo à estratégia comercial.
+> Como criador, quero definir e alterar o preço do meu jogo, para adequá-lo à estratégia comercial.
 
 Critérios de aceitação:
 - Campo de preço em BRL com máscara monetária.
@@ -449,7 +447,7 @@ Critérios de aceitação:
 ---
 
 **US-16 — Criar promoção**
-> Como publicador, quero criar uma promoção temporária para meu jogo, para atrair mais compradores.
+> Como criador, quero criar uma promoção temporária para meu jogo, para atrair mais compradores.
 
 Critérios de aceitação:
 - Definição de percentual de desconto e período (data de início e fim).
@@ -459,7 +457,7 @@ Critérios de aceitação:
 ---
 
 **US-17 — Visualizar métricas de vendas**
-> Como publicador, quero visualizar as métricas de vendas dos meus jogos, para acompanhar o desempenho comercial.
+> Como criador, quero visualizar as métricas de vendas dos meus jogos, para acompanhar o desempenho comercial.
 
 Critérios de aceitação:
 - Dashboard com: unidades vendidas, receita bruta, receita líquida (após split da plataforma), nota média e número de avaliações.
@@ -471,7 +469,7 @@ Critérios de aceitação:
 ### Administrador
 
 **US-18 — Aprovar ou rejeitar jogos**
-> Como administrador, quero aprovar ou rejeitar jogos cadastrados por publicadores, para garantir a qualidade e conformidade do catálogo.
+> Como administrador, quero aprovar ou rejeitar jogos cadastrados por criadores, para garantir a qualidade e conformidade do catálogo.
 
 Critérios de aceitação:
 - Fila de jogos com status "Em análise".
@@ -505,7 +503,7 @@ Critérios de aceitação:
 As entidades abaixo servem de referência para os diagramas:
 
 - **User** (id, name, email, password_hash, role, wallet_balance, created_at)
-- **Game** (id, title, description, publisher_id, price, release_date, status, created_at)
+- **Game** (id, title, description, creator_id, price, release_date, status, created_at)
 - **Genre** (id, name)
 - **GameGenre** (game_id, genre_id)
 - **Platform** (id, name)
