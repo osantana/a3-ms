@@ -1,6 +1,5 @@
 = Vapor: Plataforma de Venda e Distribuição Digital de Jogos
 Osvaldo Santana Neto <172320146@ulife.com.br>; João Roiko <172416335@ulife.com.br>; Paulo Eduardo Sitko Duarte <172412289@ulife.com.br>
-
 :doctype: article
 :lang: pt_BR
 :language: asciidoctor
@@ -388,6 +387,167 @@ Critérios de aceitação:
 * Fila de jogos com status "Em análise".
 * Visualização completa dos dados e mídias do jogo.
 * Opção de aprovar, rejeitar (com motivo) ou solicitar ajustes ao criador.
+
+== Diagramas de Caso de Uso
+
+=== Visão Geral
+
+[plantuml]
+----
+@startuml
+left to right direction
+skinparam actorStyle awesome
+
+actor "Jogador" as jogador
+actor "Criador" as criador
+actor "Administrador" as admin
+
+rectangle "Vapor" {
+    usecase "Cadastrar-se" as UC01
+    usecase "Fazer login" as UC02
+    usecase "Navegar pelo catálogo" as UC03
+    usecase "Buscar e filtrar jogos" as UC04
+    usecase "Visualizar detalhes do jogo" as UC05
+    usecase "Adicionar ao carrinho" as UC06
+    usecase "Finalizar compra" as UC07
+    usecase "Acessar biblioteca" as UC08
+    usecase "Baixar jogo" as UC09
+    usecase "Solicitar reembolso" as UC10
+    usecase "Cadastrar jogo" as UC11
+    usecase "Definir/alterar preço" as UC12
+    usecase "Visualizar métricas de vendas" as UC13
+    usecase "Aprovar ou rejeitar jogos" as UC14
+    usecase "Processar pagamento" as UC15
+    usecase "Adicionar fundos à carteira" as UC16
+}
+
+jogador --> UC01
+jogador --> UC02
+jogador --> UC03
+jogador --> UC04
+jogador --> UC05
+jogador --> UC06
+jogador --> UC07
+jogador --> UC08
+jogador --> UC09
+jogador --> UC10
+jogador --> UC16
+
+criador --> UC02
+criador --> UC11
+criador --> UC12
+criador --> UC13
+
+admin --> UC02
+admin --> UC14
+
+UC07 ..> UC15 : <<include>>
+UC09 ..> UC08 : <<include>>
+UC06 ..> UC05 : <<include>>
+UC04 ..> UC03 : <<extend>>
+@enduml
+----
+
+=== Jogador
+
+[plantuml]
+----
+@startuml
+left to right direction
+skinparam actorStyle awesome
+
+actor "Jogador" as jogador
+
+rectangle "Vapor — Jogador" {
+    usecase "Cadastrar-se\n(RF-01)" as UC01
+    usecase "Fazer login\n(RF-02)" as UC02
+    usecase "Navegar pelo catálogo\n(RF-04)" as UC03
+    usecase "Buscar e filtrar jogos\n(RF-05)" as UC04
+    usecase "Visualizar detalhes do jogo\n(RF-06)" as UC05
+    usecase "Adicionar ao carrinho\n(RF-07)" as UC06
+    usecase "Finalizar compra\n(RF-08)" as UC07
+    usecase "Acessar biblioteca\n(RF-10)" as UC08
+    usecase "Baixar jogo\n(RF-11)" as UC09
+    usecase "Solicitar reembolso\n(RF-15)" as UC10
+    usecase "Adicionar fundos\nà carteira\n(RF-09)" as UC16
+    usecase "Processar pagamento" as UC15
+    usecase "Validar condições\nde reembolso\n(RN-01)" as UC17
+}
+
+jogador --> UC01
+jogador --> UC02
+jogador --> UC03
+jogador --> UC04
+jogador --> UC05
+jogador --> UC06
+jogador --> UC07
+jogador --> UC08
+jogador --> UC09
+jogador --> UC10
+jogador --> UC16
+
+UC07 ..> UC15 : <<include>>
+UC09 ..> UC08 : <<include>>
+UC06 ..> UC05 : <<include>>
+UC04 ..> UC03 : <<extend>>
+UC10 ..> UC17 : <<include>>
+UC16 ..> UC15 : <<include>>
+@enduml
+----
+
+=== Criador
+
+[plantuml]
+----
+@startuml
+left to right direction
+skinparam actorStyle awesome
+
+actor "Criador" as criador
+
+rectangle "Vapor — Criador" {
+    usecase "Fazer login\n(RF-02)" as UC02
+    usecase "Cadastrar jogo\n(RF-12)" as UC11
+    usecase "Definir/alterar preço\n(RF-13)" as UC12
+    usecase "Visualizar métricas\nde vendas\n(RF-14)" as UC13
+    usecase "Exportar relatório CSV" as UC18
+    usecase "Submeter para\nanálise\n(RN-05)" as UC19
+}
+
+criador --> UC02
+criador --> UC11
+criador --> UC12
+criador --> UC13
+
+UC11 ..> UC19 : <<include>>
+UC13 ..> UC18 : <<extend>>
+@enduml
+----
+
+=== Administrador
+
+[plantuml]
+----
+@startuml
+left to right direction
+skinparam actorStyle awesome
+
+actor "Administrador" as admin
+
+rectangle "Vapor — Administrador" {
+    usecase "Fazer login\n(RF-02)" as UC02
+    usecase "Aprovar ou\nrejeitar jogos\n(RF-16)" as UC14
+    usecase "Solicitar ajustes\nao criador" as UC20
+    usecase "Visualizar dados\ndo jogo" as UC21
+}
+
+admin --> UC02
+admin --> UC14
+
+UC14 ..> UC21 : <<include>>
+UC14 ..> UC20 : <<extend>>
+@enduml
+----
 
 == Entidades Principais
 
