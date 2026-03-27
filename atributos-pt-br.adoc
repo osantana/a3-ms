@@ -1,0 +1,22 @@
+// Atributos de formatação e tradução para português brasileiro
+// Admonitions
+:note-caption: ✒️ Nota
+:tip-caption: 👉 Dica
+:warning-caption: ⚠️ Aviso
+:important-caption: Importante
+:caution-caption: Cuidado
+// Referências de seções
+:section-refsig: Seção
+:appendix-caption: Apêndice
+:appendix-refsig: {appendix-caption}
+// Legendas
+:example-caption: Exemplo
+:figure-caption: Figura
+:table-caption: Tabela
+:toc-title: Sumário
+// Formatação
+:icons: font
+:xrefstyle: full
+:sectnums:
+:sectlinks:
+:toclevels: 3
