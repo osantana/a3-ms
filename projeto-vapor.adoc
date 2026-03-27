@@ -1,5 +1,6 @@
 = Vapor: Plataforma de Venda e Distribuição Digital de Jogos
 Osvaldo Santana Neto <172320146@ulife.com.br>; João Roiko <172416335@ulife.com.br>; Paulo Eduardo Sitko Duarte <172412289@ulife.com.br>
+
 :doctype: article
 :lang: pt_BR
 :language: asciidoctor

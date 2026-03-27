@@ -17,6 +17,6 @@
 // Formatação
 :icons: font
 :xrefstyle: full
-:sectnums:
+:!sectnums:
 :sectlinks:
 :toclevels: 3

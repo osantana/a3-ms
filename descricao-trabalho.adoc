@@ -1,0 +1,37 @@
+= Modelagem de Software
+
+== Projeto da Avaliação A3
+
+* *Entrega:*
+https://animaedu-my.sharepoint.com/:f:/r/personal/joao_armenio_ulife_com_br/Documents/UC%20Modelagem%20de%20Software/Alunos%202026-1/Entrega%203%20-%20Requisitos?csf=1&web=1&e=O8eiFs
+
+=== Descrição
+
+A partir de uma ideia de um sistema apresentada pela equipe, será feita a modelagem do software desse sistema. Além do modelo, será realizada a codificação básica da estrutura de uma parte desse sistema.
+
+=== Objetivos
+Esse projeto terá dois objetivos principais:
+
+* Modelar o software do sistema escolhido pela equipe.
+* Codificar a estrutura básica desse sistema (classes e banco de dados).
+
+[NOTE]
+Nota: NÂO é objetivo desse trabalho fazer o design ou fazer o código de uma interface gráfica para o sistema. A entrada de dados será feita por linha de comando. A Modelagem dos dados consistirá em identificar os dados, identificar as classes correspondentes e modelar o banco de dados.
+
+=== Entregáveis
+
+* Composição da equipe (06/03).
+* Tema do projeto - descrição do tema em uma frase (13/03).
+* Problema a ser resolvido com o sistema (20/03).
+* Descrição do projeto – um parágrafo (20/03).
+* Requisitos Funcionais e Requisitos não Funcionais – lista de requisitos resultante de um brainstorming da equipe (20/03).
+* User Stories – requisitos descritos em forma de user story (20/03).
+* Diagrama da Casos de Uso (27/03).
+* Casos de Uso dos requisitos principais do sistema – no mínimo 3 casos de uso (10/04).
+* Diagramas de Atividades para cada caso de uso (17/04).
+* Diagrama de Classes do sistema (24/04).
+* Codificação das classes do sistema (08/05).
+* Modelo Conceitual do Banco de Dados (15/05).
+* Diagrama Entidade Relacionamento do Banco de Dados (22/05).
+* Codificação do acesso ao banco de dados (12/06).
+* Entrega final e apresentação do projeto (19/06)
