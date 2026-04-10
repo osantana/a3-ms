@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-ASCIIDOCTOR_PDF := /opt/homebrew/bin/asciidoctor-pdf
+ASCIIDOCTOR_PDF := asciidoctor-pdf
 
 projeto-vapor.pdf: projeto-vapor.adoc atributos-pt-br.adoc
 	$(ASCIIDOCTOR_PDF) -r asciidoctor-kroki \
