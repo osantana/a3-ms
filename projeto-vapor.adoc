@@ -297,6 +297,7 @@ Critérios de aceitação:
 
 === Visão Geral
 
+.Diagrama de Caso de Uso — Visão Geral
 [plantuml, pdfwidth=75%]
 ----
 @startuml
@@ -353,6 +354,7 @@ UC04 ..> UC03 : <<extend>>
 
 === Jogador
 
+.Diagrama de Caso de Uso — Jogador
 [plantuml, pdfwidth=75%]
 ----
 @startuml
@@ -396,6 +398,7 @@ UC10 ..> UC17 : <<include>>
 
 === Criador
 
+.Diagrama de Caso de Uso — Criador
 [plantuml, pdfwidth=75%]
 ----
 @startuml
@@ -424,6 +427,7 @@ UC13 ..> UC18 : <<extend>>
 
 === Administrador
 
+.Diagrama de Caso de Uso — Administrador
 [plantuml, pdfwidth=75%]
 ----
 @startuml
