@@ -1,0 +1,70 @@
+extends: default
+
+font:
+  catalog:
+    Lora:
+      normal: Lora-VariableFont_wght.ttf
+      bold: Lora-VariableFont_wght.ttf
+      italic: Lora-Italic-VariableFont_wght.ttf
+      bold_italic: Lora-Italic-VariableFont_wght.ttf
+    Lato:
+      normal: Lato-Regular.ttf
+      bold: Lato-Bold.ttf
+      italic: Lato-Italic.ttf
+      bold_italic: Lato-BoldItalic.ttf
+
+page:
+  size: A4
+  margin: [2.5cm, 2cm, 2.5cm, 2cm]
+
+base:
+  font_family: Lora
+  font_size: 10.5
+  line_height: 1.1
+  margin_bottom: 4
+
+prose:
+  margin_top: 0
+  margin_bottom: 4
+
+heading:
+  font_family: Lato
+  font_style: bold
+  line_height: 1.2
+  margin_top: 8
+  margin_bottom: 3
+
+h1:
+  font_size: 22
+  margin_top: 0
+  margin_bottom: 6
+
+h2:
+  font_size: 16
+  margin_top: 10
+  margin_bottom: 4
+
+h3:
+  font_size: 13
+  margin_top: 8
+  margin_bottom: 3
+
+h4:
+  font_size: 11
+  margin_top: 6
+  margin_bottom: 2
+
+code:
+  font_size: 8.5
+  line_height: 1.2
+
+codespan:
+  font_size: 8.5
+
+footer:
+  font_size: 8.5
+  line_height: 1
+  recto_content:
+    right: '{page-number}'
+  verso_content:
+    left: '{page-number}'

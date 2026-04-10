@@ -297,7 +297,7 @@ Critérios de aceitação:
 
 === Visão Geral
 
-[plantuml]
+[plantuml, pdfwidth=75%]
 ----
 @startuml
 left to right direction
@@ -353,7 +353,7 @@ UC04 ..> UC03 : <<extend>>
 
 === Jogador
 
-[plantuml]
+[plantuml, pdfwidth=75%]
 ----
 @startuml
 left to right direction
@@ -396,7 +396,7 @@ UC10 ..> UC17 : <<include>>
 
 === Criador
 
-[plantuml]
+[plantuml, pdfwidth=75%]
 ----
 @startuml
 left to right direction
@@ -424,7 +424,7 @@ UC13 ..> UC18 : <<extend>>
 
 === Administrador
 
-[plantuml]
+[plantuml, pdfwidth=75%]
 ----
 @startuml
 left to right direction
