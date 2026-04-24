@@ -526,6 +526,108 @@ Exceções::
 
 Pós-condições:: Jogo publicado no catálogo (aprovação) ou criador notificado com o motivo da recusa (rejeição).
 
+== Diagramas de Atividades
+
+<<<
+
+=== UC-07: Finalizar Compra
+
+.Diagrama de Atividades — UC-07: Finalizar Compra
+[plantuml, pdfwidth=60%]
+----
+@startuml
+start
+:Jogador acessa o carrinho;
+:Sistema exibe resumo do pedido\n(itens e valor total);
+:Jogador seleciona meio de pagamento\n(cartão de crédito ou PIX);
+:Jogador confirma a compra;
+:Sistema processa o pagamento\njunto ao provedor externo;
+if (Pagamento aprovado?) then (sim)
+  :Sistema adiciona os jogos\nà biblioteca do jogador;
+  :Sistema exibe confirmação\ncom número do pedido;
+else (não)
+  :Sistema notifica o jogador\nsobre a recusa;
+  :Carrinho é mantido intacto\npara nova tentativa;
+endif
+stop
+@enduml
+----
+
+<<<
+
+=== UC-10: Solicitar Reembolso
+
+.Diagrama de Atividades — UC-10: Solicitar Reembolso
+[plantuml, pdfwidth=60%]
+----
+@startuml
+start
+:Jogador acessa o histórico de pedidos;
+:Jogador seleciona o jogo\na ser reembolsado;
+:Jogador informa o motivo\nda solicitação;
+:Sistema valida as condições\nde elegibilidade (RN-01);
+if (Condições atendidas?\n(prazo ≤ 14 dias e uso < 2h)) then (sim)
+  :Sistema aprova o reembolso;
+  :Sistema devolve o valor ao\nmeio de pagamento original (RN-04);
+  :Sistema remove o jogo\nda biblioteca do jogador;
+else (não)
+  :Sistema rejeita a solicitação\ne exibe o motivo ao jogador;
+endif
+stop
+@enduml
+----
+
+<<<
+
+=== UC-11: Cadastrar Jogo
+
+.Diagrama de Atividades — UC-11: Cadastrar Jogo
+[plantuml, pdfwidth=60%]
+----
+@startuml
+start
+:Criador acessa o painel\ne inicia o cadastro de novo jogo;
+repeat
+  :Criador preenche os metadados\n(título, descrição, gêneros,\nplataformas, requisitos de sistema);
+  :Criador faz upload de mídia\n(screenshots, trailer) e\ndo arquivo de instalação;
+  :Criador define o preço\ne submete o jogo;
+  :Sistema valida campos obrigatórios\ne formatos de arquivo;
+  backward :Sistema exibe os erros encontrados;
+repeat while (Validação aprovada?) is (não) not (sim)
+:Sistema registra o jogo\ncom status "Em análise" (RN-05);
+:Sistema notifica o administrador;
+stop
+@enduml
+----
+
+<<<
+
+=== UC-14: Aprovar ou Rejeitar Jogo
+
+.Diagrama de Atividades — UC-14: Aprovar ou Rejeitar Jogo
+[plantuml, pdfwidth=60%]
+----
+@startuml
+start
+:Administrador acessa a fila\nde jogos "Em análise";
+:Administrador revisa metadados,\nmídia e arquivo de instalação;
+if (Decisão do administrador?) then (aprovar)
+  :Sistema altera o status\npara "Aprovado";
+  :Sistema publica o jogo\nno catálogo;
+  :Sistema notifica o criador;
+elseif (Decisão do administrador?) then (rejeitar)
+  :Administrador informa\no motivo da rejeição;
+  :Sistema altera o status\npara "Rejeitado";
+  :Sistema notifica o criador;
+else (solicitar ajustes)
+  :Administrador descreve\nos ajustes necessários;
+  :Sistema mantém o status\n"Em análise";
+  :Sistema notifica o criador;
+endif
+stop
+@enduml
+----
+
 == Entidades Principais
 
 As entidades abaixo servem de referência para os diagramas:
@@ -541,3 +643,397 @@ As entidades abaixo servem de referência para os diagramas:
 * *OrderItem* (id, order_id, game_id, price_paid)
 * *Library* (id, user_id, game_id, acquired_at)
 * *Refund* (id, order_item_id, reason, status, created_at)
+
+== Diagramas de Classes
+
+Os diagramas estão organizados em cinco domínios de negócio para manter a legibilidade em página A4.
+Interfaces (estereótipo `<<interface>>`) correspondem, na implementação Python, a classes abstratas (`ABC`) ou protocolos estruturais (`Protocol`).
+Classes abstratas são representadas com o estereótipo `<<abstract>>`.
+Atributos prefixados com `#` são protegidos.
+Dependências entre domínios distintos são indicadas por uma caixa de interface sem métodos acompanhada de nota referenciando o domínio de origem.
+
+[page-layout=landscape]
+<<<
+
+=== Domínio 1: Usuários e Autenticação
+
+.Diagrama de Classes — Usuários e Autenticação
+[plantuml, pdfwidth=90%]
+----
+@startuml
+skinparam classAttributeIconSize 0
+
+enum Role {
+  PLAYER
+  CREATOR
+  ADMINISTRATOR
+}
+
+interface IUserRepository {
+  + find_by_id(user_id: UUID) : User
+  + find_by_email(email: str) : User
+  + save(user: User) : User
+  + delete(user_id: UUID) : None
+}
+
+class User {
+  + id: UUID
+  + name: str
+  + email: str
+  # password_hash: str
+  + role: Role
+  + created_at: datetime
+  + authenticate(password: str) : bool
+  + change_password(new_password: str) : None
+}
+
+class AuthService {
+  + register(name: str, email: str, password: str) : User
+  + login(email: str, password: str) : User
+  + logout(user_id: UUID) : None
+  + request_password_reset(email: str) : None
+}
+
+User --> Role
+AuthService --> IUserRepository : usa
+@enduml
+----
+
+[page-layout=landscape]
+<<<
+
+=== Domínio 2: Catálogo
+
+.Diagrama de Classes — Catálogo
+[plantuml, pdfwidth=90%]
+----
+@startuml
+skinparam classAttributeIconSize 0
+
+enum GameStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+class Game {
+  + id: UUID
+  + creator_id: UUID
+  + title: str
+  + description: str
+  + price: Decimal
+  + release_date: date
+  + status: GameStatus
+  + created_at: datetime
+  + approve() : None
+  + reject(reason: str) : None
+  + update_price(price: Decimal) : None
+}
+
+class Genre {
+  + id: UUID
+  + name: str
+}
+
+class Platform {
+  + id: UUID
+  + name: str
+}
+
+class GameAsset {
+  + id: UUID
+  + game_id: UUID
+  + platform_id: UUID
+  + file_size: int
+  + generate_signed_url(ttl: int) : str
+}
+
+interface ICatalogRepository {
+  + find_by_id(game_id: UUID) : Game
+  + find_by_creator(creator_id: UUID) : list[Game]
+  + search(query: str, filters: dict) : list[Game]
+  + list_approved(cursor: str, limit: int) : tuple[list[Game], str]
+  + save(game: Game) : Game
+}
+
+interface ICatalogService {
+  + get_game(game_id: UUID) : Game
+  + search_games(query: str, filters: dict) : list[Game]
+  + list_games(cursor: str, limit: int) : tuple[list[Game], str]
+  + register_game(creator_id: UUID, data: dict) : Game
+}
+
+class CatalogService {
+  + get_game(game_id: UUID) : Game
+  + search_games(query: str, filters: dict) : list[Game]
+  + list_games(cursor: str, limit: int) : tuple[list[Game], str]
+  + register_game(creator_id: UUID, data: dict) : Game
+}
+
+Game --> GameStatus
+Game "1" *-- "0..*" GameAsset
+Game "0..*" o-- "0..*" Genre
+Game "0..*" o-- "0..*" Platform
+ICatalogService <|.. CatalogService
+CatalogService --> ICatalogRepository : usa
+@enduml
+----
+
+[page-layout=landscape]
+<<<
+
+=== Domínio 3: Carrinho e Pedidos
+
+.Diagrama de Classes — Carrinho e Pedidos
+[plantuml, pdfwidth=90%]
+----
+@startuml
+skinparam classAttributeIconSize 0
+
+enum PaymentMethod {
+  CREDIT_CARD
+  PIX
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  CANCELLED
+}
+
+class Cart {
+  + id: UUID
+  + user_id: UUID
+  + created_at: datetime
+  + add_item(game: Game) : CartItem
+  + remove_item(game_id: UUID) : None
+  + clear() : None
+  + total() : Decimal
+}
+
+class CartItem {
+  + id: UUID
+  + game_id: UUID
+  + unit_price: Decimal
+  + added_at: datetime
+}
+
+class Order {
+  + id: UUID
+  + user_id: UUID
+  + total: Decimal
+  + payment_method: PaymentMethod
+  + status: OrderStatus
+  + created_at: datetime
+  + cancel() : None
+}
+
+class OrderItem {
+  + id: UUID
+  + game_id: UUID
+  + price_paid: Decimal
+}
+
+interface ICartRepository {
+  + find_by_user(user_id: UUID) : Cart
+  + save(cart: Cart) : Cart
+  + clear(user_id: UUID) : None
+}
+
+interface IOrderRepository {
+  + find_by_id(order_id: UUID) : Order
+  + find_by_user(user_id: UUID) : list[Order]
+  + save(order: Order) : Order
+}
+
+interface IPaymentGateway {
+  + charge(order: Order, payment_data: dict) : str
+  + refund(transaction_id: str, amount: Decimal) : bool
+}
+
+interface ILibraryService {
+}
+note right of ILibraryService : ver Domínio 4
+
+interface ICheckoutService {
+  + checkout(user_id: UUID, method: PaymentMethod, payment_data: dict) : Order
+}
+
+class CheckoutService {
+  + checkout(user_id: UUID, method: PaymentMethod, payment_data: dict) : Order
+}
+
+Cart "1" *-- "0..*" CartItem
+Order --> PaymentMethod
+Order --> OrderStatus
+Order "1" *-- "1..*" OrderItem
+ICheckoutService <|.. CheckoutService
+CheckoutService --> IPaymentGateway : usa
+CheckoutService --> ICartRepository : usa
+CheckoutService --> IOrderRepository : usa
+CheckoutService --> ILibraryService : usa
+@enduml
+----
+
+[page-layout=landscape]
+<<<
+
+=== Domínio 4: Biblioteca, Downloads e Reembolso
+
+.Diagrama de Classes — Biblioteca, Downloads e Reembolso
+[plantuml, pdfwidth=90%]
+----
+@startuml
+skinparam classAttributeIconSize 0
+
+enum RefundStatus {
+  REQUESTED
+  APPROVED
+  REJECTED
+}
+
+class LibraryEntry {
+  + id: UUID
+  + user_id: UUID
+  + game_id: UUID
+  + acquired_at: datetime
+}
+
+interface ILibraryRepository {
+  + find_by_user(user_id: UUID) : list[LibraryEntry]
+  + find_entry(user_id: UUID, game_id: UUID) : LibraryEntry
+  + save(entry: LibraryEntry) : LibraryEntry
+  + delete(entry_id: UUID) : None
+}
+
+interface ILibraryService {
+  + add_game(user_id: UUID, game_id: UUID) : LibraryEntry
+  + has_game(user_id: UUID, game_id: UUID) : bool
+  + remove_game(user_id: UUID, game_id: UUID) : None
+  + list_games(user_id: UUID) : list[LibraryEntry]
+}
+
+class LibraryService {
+  + add_game(user_id: UUID, game_id: UUID) : LibraryEntry
+  + has_game(user_id: UUID, game_id: UUID) : bool
+  + remove_game(user_id: UUID, game_id: UUID) : None
+  + list_games(user_id: UUID) : list[LibraryEntry]
+}
+
+interface IDownloadService {
+  + generate_download_url(user_id: UUID, game_id: UUID, platform_id: UUID) : str
+}
+
+class DownloadService {
+  + generate_download_url(user_id: UUID, game_id: UUID, platform_id: UUID) : str
+}
+
+class Refund {
+  + id: UUID
+  + order_item_id: UUID
+  + reason: str
+  + status: RefundStatus
+  + created_at: datetime
+  + approve() : None
+  + reject(reason: str) : None
+}
+
+interface IRefundPolicy {
+  + is_eligible(order_item_id: UUID) : bool
+  + rejection_reason(order_item_id: UUID) : str
+}
+
+interface IRefundService {
+  + request(order_item_id: UUID, reason: str) : Refund
+  + process(refund_id: UUID) : None
+}
+
+class RefundService {
+  + request(order_item_id: UUID, reason: str) : Refund
+  + process(refund_id: UUID) : None
+}
+
+interface IPaymentGateway {
+}
+note right of IPaymentGateway : ver Domínio 3
+
+interface ICatalogRepository {
+}
+note right of ICatalogRepository : ver Domínio 2
+
+ILibraryService <|.. LibraryService
+IDownloadService <|.. DownloadService
+IRefundService <|.. RefundService
+LibraryService --> ILibraryRepository : usa
+DownloadService --> ILibraryService : usa
+DownloadService --> ICatalogRepository : usa
+RefundService --> IRefundPolicy : usa
+RefundService --> IPaymentGateway : usa
+RefundService --> ILibraryService : usa
+@enduml
+----
+
+[page-layout=landscape]
+<<<
+
+=== Domínio 5: Moderação e Painel do Criador
+
+.Diagrama de Classes — Moderação e Painel do Criador
+[plantuml, pdfwidth=90%]
+----
+@startuml
+skinparam classAttributeIconSize 0
+
+interface INotificationService {
+  + send(user_id: UUID, subject: str, body: str) : None
+}
+
+interface IModerationService {
+  + list_pending() : list[Game]
+  + approve(game_id: UUID, admin_id: UUID) : None
+  + reject(game_id: UUID, admin_id: UUID, reason: str) : None
+  + request_changes(game_id: UUID, admin_id: UUID, notes: str) : None
+}
+
+class ModerationService {
+  + list_pending() : list[Game]
+  + approve(game_id: UUID, admin_id: UUID) : None
+  + reject(game_id: UUID, admin_id: UUID, reason: str) : None
+  + request_changes(game_id: UUID, admin_id: UUID, notes: str) : None
+}
+
+class SalesMetrics {
+  + game_id: UUID
+  + game_title: str
+  + units_sold: int
+  + gross_revenue: Decimal
+  + net_revenue: Decimal
+  + period_start: date
+  + period_end: date
+}
+
+interface ISalesDashboardService {
+  + get_metrics(creator_id: UUID, game_id: UUID, start: date, end: date) : list[SalesMetrics]
+  + export_csv(creator_id: UUID, start: date, end: date) : bytes
+}
+
+class SalesDashboardService {
+  + get_metrics(creator_id: UUID, game_id: UUID, start: date, end: date) : list[SalesMetrics]
+  + export_csv(creator_id: UUID, start: date, end: date) : bytes
+}
+
+interface ICatalogRepository {
+}
+note right of ICatalogRepository : ver Domínio 2
+
+interface IOrderRepository {
+}
+note right of IOrderRepository : ver Domínio 3
+
+IModerationService <|.. ModerationService
+ISalesDashboardService <|.. SalesDashboardService
+ModerationService --> INotificationService : usa
+ModerationService --> ICatalogRepository : usa
+SalesDashboardService --> IOrderRepository : usa
+@enduml
+----

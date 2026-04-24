@@ -12,6 +12,11 @@ font:
       bold: Lato-Bold.ttf
       italic: Lato-Italic.ttf
       bold_italic: Lato-BoldItalic.ttf
+    JetBrainsMono:
+      normal: JetBrainsMono-Regular.ttf
+      bold: JetBrainsMono-Bold.ttf
+      italic: JetBrainsMono-Italic.ttf
+      bold_italic: JetBrainsMono-BoldItalic.ttf
 
 page:
   size: A4
@@ -55,10 +60,12 @@ h4:
   margin_bottom: 2
 
 code:
+  font_family: JetBrainsMono
   font_size: 8.5
   line_height: 1.2
 
 codespan:
+  font_family: JetBrainsMono
   font_size: 8.5
 
 footer:
