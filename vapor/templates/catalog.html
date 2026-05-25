@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Catalog — Vapor{% endblock %}
+{% block content %}
+<h1>Catalog</h1>
+
+<form method="get" action="/catalog" class="search-bar">
+  <input name="query" placeholder="Search games..." value="{{ query }}">
+  <input name="genre" placeholder="Filter by genre" value="{{ genre }}">
+  <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+{% if games %}
+<div class="grid">
+  {% for game in games %}
+  <a href="/games/{{ game.id }}" class="card" style="text-decoration:none;color:inherit">
+    <h3>{{ game.title }}</h3>
+    <div class="mb-1">
+      {% for g in game.genres %}
+        <span class="badge badge-genre">{{ g.name }}</span>
+      {% endfor %}
+    </div>
+    <span class="price">
+      {% if game.price == game.price.__class__('0.00') %}
+        Free
+      {% else %}
+        R$ {{ game.price }}
+      {% endif %}
+    </span>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<p>No games found.</p>
+{% endif %}
+{% endblock %}

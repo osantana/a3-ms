@@ -2,3 +2,8 @@
 .claude/
 .asciidoctor/
 *.png
+__pycache__/
+*.py[cod]
+.venv/
+*.db
+.ruff_cache/

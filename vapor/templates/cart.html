@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Cart — Vapor{% endblock %}
+{% block content %}
+<h1>Cart</h1>
+
+{% if cart.items %}
+<div class="card">
+  <table class="table">
+    <thead>
+      <tr><th>Game</th><th>Price</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for item in cart.items %}
+      <tr>
+        <td><a href="/games/{{ item.game_id }}">{{ games[item.game_id].title }}</a></td>
+        <td>R$ {{ item.unit_price }}</td>
+        <td class="text-right">
+          <form method="post" action="/cart/remove/{{ item.game_id }}" class="inline">
+            <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td><strong>Total</strong></td>
+        <td colspan="2"><strong class="price">R$ {{ cart.total() }}</strong></td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <form method="post" action="/checkout" class="mt-1">
+    <div class="field" style="max-width:250px">
+      <label for="payment_method">Payment method</label>
+      <select id="payment_method" name="payment_method">
+        <option value="pix">PIX</option>
+        <option value="credit_card">Credit Card</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-success">Complete Purchase</button>
+  </form>
+</div>
+{% else %}
+<p>Your cart is empty. <a href="/catalog">Browse the catalog</a></p>
+{% endif %}
+{% endblock %}

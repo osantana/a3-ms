@@ -1,3 +1,4 @@
+// suppress inspection "LongLine" for whole file
 = Vapor: Plataforma de Venda e Distribuição Digital de Jogos
 :authors: Osvaldo Santana Neto <172320146@ulife.com.br>; João Roiko <172416335@ulife.com.br>; Paulo Eduardo Sitko Duarte <172412289@ulife.com.br>
 :doctype: article
@@ -18,12 +19,13 @@ include::atributos-pt-br.adoc[]
 
 == Tema
 
-Desenvolvimento de uma plataforma web de comércio eletrônico voltada à venda,
-distribuição e gerenciamento de jogos digitais.
+Desenvolvimento de uma plataforma web de comércio eletrônico voltada à venda, distribuição e gerenciamento de jogos digitais.
+
+<<<
 
 == Descrição do Projeto
 
-O *Vapor* é uma aplicação web que permite a compra, venda e download de jogos digitais. A plataforma conecta duas categorias de usuários: *jogadores*, que navegam por um catálogo, compram títulos e gerenciam sua biblioteca pessoal; e *criadores*, que cadastram, precificam e distribuem seus jogos.
+O *Vapor* é uma aplicação web que permite a compra, venda e download de jogos digitais. Qualquer *usuário* registrado pode tanto comprar jogos e gerenciar sua biblioteca pessoal quanto publicar seus próprios títulos na plataforma. *Administradores* são responsáveis pela moderação do catálogo.
 
 O sistema contempla funcionalidades essenciais de uma loja digital: catálogo com busca e filtros, carrinho de compras, processamento de pagamentos, biblioteca pessoal com gerenciamento de downloads e solicitação de reembolso.
 
@@ -40,7 +42,7 @@ O sistema deve permitir _login_ e _logout_ com credenciais de e-mail e senha. +
 _Prioridade: Essencial_
 
 RF-03: Perfis de acesso::
-O sistema deve distinguir três perfis: Jogador, Criador e Administrador. +
+O sistema deve distinguir dois perfis: Usuário e Administrador. Qualquer usuário pode comprar e publicar jogos. +
 _Prioridade: Essencial_
 
 RF-04: Catálogo de jogos::
@@ -64,30 +66,30 @@ O sistema deve processar pagamentos via cartão de crédito e PIX. +
 _Prioridade: Essencial_
 
 RF-10: Biblioteca pessoal::
-O sistema deve manter uma biblioteca com todos os jogos adquiridos pelo jogador. +
+O sistema deve manter uma biblioteca com todos os jogos adquiridos pelo usuário. +
 _Prioridade: Essencial_
 
 RF-11: Download de jogos::
-O sistema deve fornecer links de download para os jogos presentes na biblioteca do jogador. +
+O sistema deve fornecer links de download para os jogos presentes na biblioteca do usuário. +
 _Prioridade: Essencial_
 
-RF-12: Cadastro de jogos (criador)::
-O sistema deve permitir que criadores cadastrem novos jogos com metadados, mídias e arquivos de instalação. +
+RF-12: Cadastro de jogos::
+O sistema deve permitir que usuários cadastrem novos jogos com metadados, mídias e arquivos de instalação. +
 _Prioridade: Essencial_
 
 RF-13: Gerenciamento de preços::
-O sistema deve permitir que criadores definam e alterem o preço de seus jogos. +
+O sistema deve permitir que usuários definam e alterem o preço de seus jogos. +
 _Prioridade: Essencial_
 
-RF-14: Painel de vendas (criador)::
-O sistema deve exibir ao criador métricas de vendas: unidades vendidas e receita. +
+RF-14: Painel de vendas::
+O sistema deve exibir ao usuário publicador métricas de vendas: unidades vendidas e receita. +
 _Prioridade: Importante_
 
 RF-15: Reembolso::
 O sistema deve permitir a solicitação de reembolso dentro de um prazo configurável após a compra. +
 _Prioridade: Desejável_
 
-RF-16: Moderação de jogos (administrador)::
+RF-16: Moderação de jogos::
 O sistema deve fornecer ao administrador uma fila de jogos submetidos para revisão, permitindo aprová-los ou rejeitá-los antes de ficarem disponíveis no catálogo. +
 _Prioridade: Essencial_
 
@@ -147,23 +149,23 @@ _Categoria: Legal_
 O reembolso só pode ser solicitado em até 14 dias após a compra e com menos de 2 horas de uso registrado.
 
 *RN-02: Split de receita*::
-O criador recebe 70% do valor líquido de cada venda; os 30% restantes são retidos pela plataforma.
+O publicador recebe 70% do valor líquido de cada venda; os 30% restantes são retidos pela plataforma.
 
 *RN-03: Compra única por título*::
-Um jogo já presente na biblioteca do jogador não pode ser comprado novamente.
+Um jogo já presente na biblioteca do usuário não pode ser comprado novamente.
 
 *RN-04: Reembolso ao meio original*::
 Reembolsos aprovados devolvem o valor ao meio de pagamento original.
 
 *RN-05: Aprovação de jogos*::
-Jogos cadastrados por criadores ficam com status "Em análise" até aprovação do administrador e só aparecem no catálogo após aprovados.
+Jogos cadastrados por usuários ficam com status "Em análise" até aprovação do administrador e só aparecem no catálogo após aprovados.
 
 == User Stories
 
-=== Jogador
+=== Usuário
 
 US-01: Cadastro::
-_Como jogador, quero me cadastrar na plataforma com meu e-mail e senha, para ter acesso ao catálogo e poder realizar compras._
+_Como usuário, quero me cadastrar na plataforma com meu e-mail e senha, para ter acesso ao catálogo e poder realizar compras e publicar jogos._
 +
 Critérios de aceitação:
 +
@@ -173,7 +175,7 @@ Critérios de aceitação:
 * Exibição de mensagem de erro caso o e-mail já esteja cadastrado.
 
 US-02: Login::
-_Como jogador, quero fazer login com meu e-mail e senha, para acessar minha conta e biblioteca._
+_Como usuário, quero fazer login com meu e-mail e senha, para acessar minha conta e biblioteca._
 +
 Critérios de aceitação:
 +
@@ -182,7 +184,7 @@ Critérios de aceitação:
 * Bloqueio temporário após 5 tentativas falhas consecutivas.
 
 US-03: Navegar pelo catálogo::
-_Como jogador, quero navegar pelo catálogo de jogos disponíveis, para descobrir novos títulos._
+_Como usuário, quero navegar pelo catálogo de jogos disponíveis, para descobrir novos títulos._
 +
 Critérios de aceitação:
 +
@@ -191,7 +193,7 @@ Critérios de aceitação:
 * Ordenação por relevância, preço e data de lançamento.
 
 US-04: Buscar e filtrar jogos::
-_Como jogador, quero buscar jogos por nome e aplicar filtros, para encontrar rapidamente o que procuro._
+_Como usuário, quero buscar jogos por nome e aplicar filtros, para encontrar rapidamente o que procuro._
 +
 Critérios de aceitação:
 +
@@ -200,15 +202,15 @@ Critérios de aceitação:
 * Resultados atualizados sem recarregar a página (AJAX/SPA).
 
 US-05: Visualizar detalhes do jogo::
-_Como jogador, quero ver a página de detalhes de um jogo, para decidir se quero comprá-lo._
+_Como usuário, quero ver a página de detalhes de um jogo, para decidir se quero comprá-lo._
 +
 Critérios de aceitação:
 +
-* Exibição de: descrição, screenshots/trailer, gêneros, data de lançamento, criador, requisitos de sistema e preço.
+* Exibição de: descrição, screenshots/trailer, gêneros, data de lançamento, publicador, requisitos de sistema e preço.
 * Botão "Adicionar ao Carrinho" visível (ou "Na Biblioteca" se já adquirido).
 
 US-06: Adicionar ao carrinho::
-_Como jogador, quero adicionar jogos ao meu carrinho de compras, para adquirir múltiplos títulos em uma única transação._
+_Como usuário, quero adicionar jogos ao meu carrinho de compras, para adquirir múltiplos títulos em uma única transação._
 +
 Critérios de aceitação:
 +
@@ -217,7 +219,7 @@ Critérios de aceitação:
 * Contador de itens visível no ícone do carrinho.
 
 US-07: Finalizar compra::
-_Como jogador, quero finalizar a compra dos jogos no meu carrinho, para adicioná-los à minha biblioteca._
+_Como usuário, quero finalizar a compra dos jogos no meu carrinho, para adicioná-los à minha biblioteca._
 +
 Critérios de aceitação:
 +
@@ -227,7 +229,7 @@ Critérios de aceitação:
 * Jogos adicionados automaticamente à biblioteca após pagamento confirmado.
 
 US-08: Acessar a biblioteca::
-_Como jogador, quero acessar minha biblioteca pessoal, para ver e gerenciar os jogos que possuo._
+_Como usuário, quero acessar minha biblioteca pessoal, para ver e gerenciar os jogos que possuo._
 +
 Critérios de aceitação:
 +
@@ -236,7 +238,7 @@ Critérios de aceitação:
 * Botão de download em cada título.
 
 US-09: Baixar um jogo::
-_Como jogador, quero baixar um jogo da minha biblioteca, para instalá-lo no meu computador._
+_Como usuário, quero baixar um jogo da minha biblioteca, para instalá-lo no meu computador._
 +
 Critérios de aceitação:
 +
@@ -245,7 +247,7 @@ Critérios de aceitação:
 * Seleção de plataforma quando o jogo tiver múltiplas versões.
 
 US-10: Solicitar reembolso::
-_Como jogador, quero solicitar o reembolso de um jogo, caso ele não atenda às minhas expectativas dentro do prazo permitido._
+_Como usuário, quero solicitar o reembolso de um jogo, caso ele não atenda às minhas expectativas dentro do prazo permitido._
 +
 Critérios de aceitação:
 +
@@ -253,10 +255,8 @@ Critérios de aceitação:
 * Campo para motivo do reembolso.
 * Reembolso automático ao meio de pagamento original após aprovação.
 
-=== Criador
-
 US-11: Cadastrar um jogo::
-_Como criador, quero cadastrar um novo jogo na plataforma, para disponibilizá-lo para venda._
+_Como usuário, quero cadastrar um novo jogo na plataforma, para disponibilizá-lo para venda._
 +
 Critérios de aceitação:
 +
@@ -265,7 +265,7 @@ Critérios de aceitação:
 * Status inicial "Em análise" até aprovação pelo administrador (RN-05).
 
 US-12: Definir e alterar preço::
-_Como criador, quero definir e alterar o preço do meu jogo, para adequá-lo à estratégia comercial._
+_Como usuário, quero definir e alterar o preço do meu jogo, para adequá-lo à estratégia comercial._
 +
 Critérios de aceitação:
 +
@@ -274,7 +274,7 @@ Critérios de aceitação:
 * Histórico de alterações de preço visível.
 
 US-13: Visualizar métricas de vendas::
-_Como criador, quero visualizar as métricas de vendas dos meus jogos, para acompanhar o desempenho comercial._
+_Como usuário, quero visualizar as métricas de vendas dos meus jogos, para acompanhar o desempenho comercial._
 +
 Critérios de aceitação:
 +
@@ -285,13 +285,13 @@ Critérios de aceitação:
 === Administrador
 
 US-14: Aprovar ou rejeitar jogos::
-_Como administrador, quero aprovar ou rejeitar jogos cadastrados por criadores, para garantir a qualidade e conformidade do catálogo._
+_Como administrador, quero aprovar ou rejeitar jogos cadastrados por usuários, para garantir a qualidade e conformidade do catálogo._
 +
 Critérios de aceitação:
 +
 * Fila de jogos com status "Em análise".
 * Visualização completa dos dados e mídias do jogo.
-* Opção de aprovar, rejeitar (com motivo) ou solicitar ajustes ao criador.
+* Opção de aprovar, rejeitar (com motivo) ou solicitar ajustes ao usuário.
 
 == Diagramas de Caso de Uso
 
@@ -303,7 +303,6 @@ Critérios de aceitação:
 @startuml
 left to right direction
 
-actor "Criador" as criador
 actor "Administrador" as admin
 
 rectangle "Vapor" {
@@ -324,23 +323,21 @@ rectangle "Vapor" {
     usecase "Processar pagamento" as UC15
 }
 
-actor "Jogador" as jogador
+actor "Usuário" as usuario
 
-UC01 <-- jogador
-UC02 <-- jogador
-UC03 <-- jogador
-UC04 <-- jogador
-UC05 <-- jogador
-UC06 <-- jogador
-UC07 <-- jogador
-UC08 <-- jogador
-UC09 <-- jogador
-UC10 <-- jogador
-
-criador --> UC02
-criador --> UC11
-criador --> UC12
-criador --> UC13
+UC01 <-- usuario
+UC02 <-- usuario
+UC03 <-- usuario
+UC04 <-- usuario
+UC05 <-- usuario
+UC06 <-- usuario
+UC07 <-- usuario
+UC08 <-- usuario
+UC09 <-- usuario
+UC10 <-- usuario
+UC11 <-- usuario
+UC12 <-- usuario
+UC13 <-- usuario
 
 admin --> UC02
 admin --> UC14
@@ -352,17 +349,17 @@ UC04 ..> UC03 : <<extend>>
 @enduml
 ----
 
-=== Jogador
+=== Usuário
 
-.Diagrama de Caso de Uso — Jogador
+.Diagrama de Caso de Uso — Usuário
 [plantuml, pdfwidth=75%]
 ----
 @startuml
 left to right direction
 
-actor "Jogador" as jogador
+actor "Usuário" as usuario
 
-rectangle "Vapor — Jogador" {
+rectangle "Vapor — Usuário" {
     usecase "Cadastrar-se\n(RF-01)" as UC01
     usecase "Fazer login\n(RF-02)" as UC02
     usecase "Navegar pelo catálogo\n(RF-04)" as UC03
@@ -373,57 +370,40 @@ rectangle "Vapor — Jogador" {
     usecase "Acessar biblioteca\n(RF-10)" as UC08
     usecase "Baixar jogo\n(RF-11)" as UC09
     usecase "Solicitar reembolso\n(RF-15)" as UC10
+    usecase "Cadastrar jogo\n(RF-12)" as UC11
+    usecase "Definir/alterar preço\n(RF-13)" as UC12
+    usecase "Visualizar métricas\nde vendas\n(RF-14)" as UC13
     usecase "Processar pagamento" as UC15
     usecase "Validar condições\nde reembolso\n(RN-01)" as UC17
+    usecase "Submeter para\nanálise\n(RN-05)" as UC19
+    usecase "Exportar relatório CSV" as UC18
 }
 
-jogador --> UC01
-jogador --> UC02
-jogador --> UC03
-jogador --> UC04
-jogador --> UC05
-jogador --> UC06
-jogador --> UC07
-jogador --> UC08
-jogador --> UC09
-jogador --> UC10
+usuario --> UC01
+usuario --> UC02
+usuario --> UC03
+usuario --> UC04
+usuario --> UC05
+usuario --> UC06
+usuario --> UC07
+usuario --> UC08
+usuario --> UC09
+usuario --> UC10
+usuario --> UC11
+usuario --> UC12
+usuario --> UC13
 
 UC07 ..> UC15 : <<include>>
 UC09 ..> UC08 : <<include>>
 UC06 ..> UC05 : <<include>>
 UC04 ..> UC03 : <<extend>>
 UC10 ..> UC17 : <<include>>
-@enduml
-----
-
-=== Criador
-
-.Diagrama de Caso de Uso — Criador
-[plantuml, pdfwidth=75%]
-----
-@startuml
-left to right direction
-
-actor "Criador" as criador
-
-rectangle "Vapor — Criador" {
-    usecase "Fazer login\n(RF-02)" as UC02
-    usecase "Cadastrar jogo\n(RF-12)" as UC11
-    usecase "Definir/alterar preço\n(RF-13)" as UC12
-    usecase "Visualizar métricas\nde vendas\n(RF-14)" as UC13
-    usecase "Exportar relatório CSV" as UC18
-    usecase "Submeter para\nanálise\n(RN-05)" as UC19
-}
-
-criador --> UC02
-criador --> UC11
-criador --> UC12
-criador --> UC13
-
 UC11 ..> UC19 : <<include>>
 UC13 ..> UC18 : <<extend>>
 @enduml
 ----
+
+<<<
 
 === Administrador
 
@@ -438,7 +418,7 @@ actor "Administrador" as admin
 rectangle "Vapor — Administrador" {
     usecase "Fazer login\n(RF-02)" as UC02
     usecase "Aprovar ou\nrejeitar jogos\n(RF-16)" as UC14
-    usecase "Solicitar ajustes\nao criador" as UC20
+    usecase "Solicitar ajustes\nao usuário" as UC20
     usecase "Visualizar dados\ndo jogo" as UC21
 }
 
@@ -454,59 +434,59 @@ UC14 ..> UC20 : <<extend>>
 
 === UC-07: Finalizar compra
 
-Ator:: Jogador
+Ator:: Usuário
 Pré-condições:: Usuário autenticado; carrinho com ao menos um item.
 Fluxo principal::
 +
-. Jogador acessa o carrinho e inicia o checkout.
+. Usuário acessa o carrinho e inicia o checkout.
 . Sistema exibe resumo do pedido com itens e valor total.
-. Jogador seleciona o meio de pagamento (cartão de crédito ou PIX).
-. Jogador confirma a compra.
+. Usuário seleciona o meio de pagamento (cartão de crédito ou PIX).
+. Usuário confirma a compra.
 . Sistema processa o pagamento junto ao provedor externo.
-. Sistema adiciona os jogos à biblioteca do jogador.
+. Sistema adiciona os jogos à biblioteca do usuário.
 . Sistema exibe confirmação com número do pedido.
 
 Exceções::
 +
-* Pagamento recusado: sistema notifica o jogador e mantém o carrinho intacto para nova tentativa.
+* Pagamento recusado: sistema notifica o usuário e mantém o carrinho intacto para nova tentativa.
 
-Pós-condições:: Pedido registrado no histórico; jogos disponíveis na biblioteca do jogador.
+Pós-condições:: Pedido registrado no histórico; jogos disponíveis na biblioteca do usuário.
 
 === UC-10: Solicitar reembolso
 
-Ator:: Jogador
+Ator:: Usuário
 Pré-condições:: Usuário autenticado; jogo presente na biblioteca; condições de elegibilidade atendidas (RN-01).
 Fluxo principal::
 +
-. Jogador acessa o histórico de pedidos e seleciona o jogo a reembolsar.
-. Jogador inicia a solicitação e informa o motivo.
+. Usuário acessa o histórico de pedidos e seleciona o jogo a reembolsar.
+. Usuário inicia a solicitação e informa o motivo.
 . Sistema valida as condições de elegibilidade (prazo e tempo de uso).
 . Sistema aprova o reembolso e devolve o valor ao meio de pagamento original.
-. Sistema remove o jogo da biblioteca do jogador.
+. Sistema remove o jogo da biblioteca do usuário.
 
 Exceções::
 +
-* Condições não atendidas (prazo expirado ou tempo de uso excedido): sistema rejeita a solicitação e exibe o motivo ao jogador.
+* Condições não atendidas (prazo expirado ou tempo de uso excedido): sistema rejeita a solicitação e exibe o motivo ao usuário.
 
 Pós-condições:: Valor reembolsado ao meio de pagamento original; jogo removido da biblioteca.
 
 === UC-11: Cadastrar jogo
 
-Ator:: Criador
-Pré-condições:: Usuário autenticado com perfil Criador.
+Ator:: Usuário
+Pré-condições:: Usuário autenticado.
 Fluxo principal::
 +
-. Criador acessa o painel e inicia o cadastro de novo jogo.
-. Criador preenche os metadados: título, descrição, gêneros, plataformas suportadas e requisitos de sistema.
-. Criador faz upload de mídia (screenshots e trailer) e do arquivo de instalação.
-. Criador define o preço e submete o jogo para análise.
+. Usuário acessa o painel e inicia o cadastro de novo jogo.
+. Usuário preenche os metadados: título, descrição, gêneros, plataformas suportadas e requisitos de sistema.
+. Usuário faz upload de mídia (screenshots e trailer) e do arquivo de instalação.
+. Usuário define o preço e submete o jogo para análise.
 . Sistema registra o jogo com status "Em análise" (RN-05) e notifica o administrador.
 
 Exceções::
 +
 * Campos obrigatórios ausentes ou formato de arquivo inválido: sistema exibe os erros e aguarda correção antes de prosseguir.
 
-Pós-condições:: Jogo registrado com status "Em análise", visível apenas para o criador e administradores.
+Pós-condições:: Jogo registrado com status "Em análise", visível apenas para o publicador e administradores.
 
 === UC-14: Aprovar ou rejeitar jogo
 
@@ -517,18 +497,18 @@ Fluxo principal::
 . Administrador acessa a fila de jogos em análise.
 . Administrador revisa os metadados, mídia e arquivo de instalação do jogo.
 . Administrador aprova o jogo.
-. Sistema altera o status para "Aprovado", publica o jogo no catálogo e notifica o criador.
+. Sistema altera o status para "Aprovado", publica o jogo no catálogo e notifica o publicador.
 
 Exceções::
 +
-* Rejeição: administrador informa o motivo; sistema altera o status para "Rejeitado" e notifica o criador.
-* Solicitação de ajustes: administrador descreve os ajustes necessários; sistema mantém o status "Em análise" e notifica o criador.
+* Rejeição: administrador informa o motivo; sistema altera o status para "Rejeitado" e notifica o publicador.
+* Solicitação de ajustes: administrador descreve os ajustes necessários; sistema mantém o status "Em análise" e notifica o publicador.
 
-Pós-condições:: Jogo publicado no catálogo (aprovação) ou criador notificado com o motivo da recusa (rejeição).
-
-== Diagramas de Atividades
+Pós-condições:: Jogo publicado no catálogo (aprovação) ou publicador notificado com o motivo da recusa (rejeição).
 
 <<<
+
+== Diagramas de Atividades
 
 === UC-07: Finalizar Compra
 
@@ -537,16 +517,16 @@ Pós-condições:: Jogo publicado no catálogo (aprovação) ou criador notifica
 ----
 @startuml
 start
-:Jogador acessa o carrinho;
+:Usuário acessa o carrinho;
 :Sistema exibe resumo do pedido\n(itens e valor total);
-:Jogador seleciona meio de pagamento\n(cartão de crédito ou PIX);
-:Jogador confirma a compra;
+:Usuário seleciona meio de pagamento\n(cartão de crédito ou PIX);
+:Usuário confirma a compra;
 :Sistema processa o pagamento\njunto ao provedor externo;
 if (Pagamento aprovado?) then (sim)
-  :Sistema adiciona os jogos\nà biblioteca do jogador;
+  :Sistema adiciona os jogos\nà biblioteca do usuário;
   :Sistema exibe confirmação\ncom número do pedido;
 else (não)
-  :Sistema notifica o jogador\nsobre a recusa;
+  :Sistema notifica o usuário\nsobre a recusa;
   :Carrinho é mantido intacto\npara nova tentativa;
 endif
 stop
@@ -562,16 +542,16 @@ stop
 ----
 @startuml
 start
-:Jogador acessa o histórico de pedidos;
-:Jogador seleciona o jogo\na ser reembolsado;
-:Jogador informa o motivo\nda solicitação;
+:Usuário acessa o histórico de pedidos;
+:Usuário seleciona o jogo\na ser reembolsado;
+:Usuário informa o motivo\nda solicitação;
 :Sistema valida as condições\nde elegibilidade (RN-01);
 if (Condições atendidas?\n(prazo ≤ 14 dias e uso < 2h)) then (sim)
   :Sistema aprova o reembolso;
   :Sistema devolve o valor ao\nmeio de pagamento original (RN-04);
-  :Sistema remove o jogo\nda biblioteca do jogador;
+  :Sistema remove o jogo\nda biblioteca do usuário;
 else (não)
-  :Sistema rejeita a solicitação\ne exibe o motivo ao jogador;
+  :Sistema rejeita a solicitação\ne exibe o motivo ao usuário;
 endif
 stop
 @enduml
@@ -586,11 +566,11 @@ stop
 ----
 @startuml
 start
-:Criador acessa o painel\ne inicia o cadastro de novo jogo;
+:Usuário acessa o painel\ne inicia o cadastro de novo jogo;
 repeat
-  :Criador preenche os metadados\n(título, descrição, gêneros,\nplataformas, requisitos de sistema);
-  :Criador faz upload de mídia\n(screenshots, trailer) e\ndo arquivo de instalação;
-  :Criador define o preço\ne submete o jogo;
+  :Usuário preenche os metadados\n(título, descrição, gêneros,\nplataformas, requisitos de sistema);
+  :Usuário faz upload de mídia\n(screenshots, trailer) e\ndo arquivo de instalação;
+  :Usuário define o preço\ne submete o jogo;
   :Sistema valida campos obrigatórios\ne formatos de arquivo;
   backward :Sistema exibe os erros encontrados;
 repeat while (Validação aprovada?) is (não) not (sim)
@@ -614,15 +594,15 @@ start
 if (Decisão do administrador?) then (aprovar)
   :Sistema altera o status\npara "Aprovado";
   :Sistema publica o jogo\nno catálogo;
-  :Sistema notifica o criador;
+  :Sistema notifica o publicador;
 elseif (Decisão do administrador?) then (rejeitar)
   :Administrador informa\no motivo da rejeição;
   :Sistema altera o status\npara "Rejeitado";
-  :Sistema notifica o criador;
+  :Sistema notifica o publicador;
 else (solicitar ajustes)
   :Administrador descreve\nos ajustes necessários;
   :Sistema mantém o status\n"Em análise";
-  :Sistema notifica o criador;
+  :Sistema notifica o publicador;
 endif
 stop
 @enduml
@@ -644,36 +624,173 @@ As entidades abaixo servem de referência para os diagramas:
 * *Library* (id, user_id, game_id, acquired_at)
 * *Refund* (id, order_item_id, reason, status, created_at)
 
-== Diagramas de Classes
+<<<
 
-Os diagramas estão organizados em cinco domínios de negócio para manter a legibilidade em página A4.
-Interfaces (estereótipo `<<interface>>`) correspondem, na implementação Python, a classes abstratas (`ABC`) ou protocolos estruturais (`Protocol`).
-Classes abstratas são representadas com o estereótipo `<<abstract>>`.
-Atributos prefixados com `#` são protegidos.
-Dependências entre domínios distintos são indicadas por uma caixa de interface sem métodos acompanhada de nota referenciando o domínio de origem.
+== Modelo Conceitual do Banco de Dados
+
+O modelo conceitual apresenta as entidades do sistema e seus relacionamentos em alto nível, sem detalhes de implementação.
+
+.Modelo Conceitual — Vapor
+[plantuml, pdfwidth=90%]
+----
+@startuml
+skinparam linetype ortho
+skinparam objectBorderColor #333
+skinparam objectBackgroundColor #FEFECE
+
+object User
+object Game
+object Genre
+object Platform
+object GameAsset
+object Cart
+object CartItem
+object Order
+object OrderItem
+object LibraryEntry
+object Refund
+
+User "1" -- "0..*" Game : cria >
+User "1" -- "0..1" Cart : possui >
+User "1" -- "0..*" Order : realiza >
+User "1" -- "0..*" LibraryEntry : possui >
+Cart "1" *-- "0..*" CartItem : contém >
+CartItem "0..*" -- "1" Game : referencia >
+Order "1" *-- "1..*" OrderItem : contém >
+OrderItem "0..*" -- "1" Game : referencia >
+OrderItem "1" -- "0..1" Refund : gera >
+LibraryEntry "0..*" -- "1" Game : referencia >
+Game "0..*" -- "0..*" Genre : classificado por >
+Game "0..*" -- "0..*" Platform : suporta >
+Game "1" *-- "0..*" GameAsset : possui >
+GameAsset "0..*" -- "1" Platform : para >
+@enduml
+----
 
 [page-layout=landscape]
 <<<
 
+== Diagrama Entidade Relacionamento
+
+O diagrama ER detalha as tabelas, colunas, tipos de dados, chaves primárias e chaves estrangeiras do banco de dados relacional.
+
+.Diagrama ER — Vapor
+[mermaid, format=png, pdfwidth=75%]
+----
+%%{init: {'theme': 'neutral'}}%%
+erDiagram
+    users {
+        UUID id PK
+        VARCHAR_120 name
+        VARCHAR_254 email UK
+        VARCHAR_64 password_hash
+        VARCHAR_20 role
+        TIMESTAMPTZ created_at
+    }
+    games {
+        UUID id PK
+        UUID creator_id FK
+        VARCHAR_200 title
+        TEXT description
+        NUMERIC_10_2 price
+        DATE release_date
+        VARCHAR_20 status
+        TIMESTAMPTZ created_at
+    }
+    genres {
+        UUID id PK
+        VARCHAR_60 name UK
+    }
+    platforms {
+        UUID id PK
+        VARCHAR_60 name UK
+    }
+    game_genres {
+        UUID game_id PK,FK
+        UUID genre_id PK,FK
+    }
+    game_platforms {
+        UUID game_id PK,FK
+        UUID platform_id PK,FK
+    }
+    game_assets {
+        UUID id PK
+        UUID game_id FK
+        UUID platform_id FK
+        BIGINT file_size
+        VARCHAR_500 download_url
+    }
+    cart_items {
+        UUID id PK
+        UUID user_id FK
+        UUID game_id FK
+        NUMERIC_10_2 unit_price
+        TIMESTAMPTZ added_at
+    }
+    orders {
+        UUID id PK
+        UUID user_id FK
+        NUMERIC_10_2 total
+        VARCHAR_20 payment_method
+        VARCHAR_20 status
+        TIMESTAMPTZ created_at
+    }
+    order_items {
+        UUID id PK
+        UUID order_id FK
+        UUID game_id FK
+        NUMERIC_10_2 price_paid
+    }
+    library_entries {
+        UUID id PK
+        UUID user_id FK
+        UUID game_id FK
+        TIMESTAMPTZ acquired_at
+    }
+    refunds {
+        UUID id PK
+        UUID order_item_id FK
+        TEXT reason
+        VARCHAR_20 status
+        TIMESTAMPTZ created_at
+    }
+
+    users ||--o{ games : "cria"
+    users ||--o{ cart_items : "possui"
+    users ||--o{ orders : "realiza"
+    users ||--o{ library_entries : "possui"
+    games ||--o{ game_genres : ""
+    genres ||--o{ game_genres : ""
+    games ||--o{ game_platforms : ""
+    platforms ||--o{ game_platforms : ""
+    games ||--o{ game_assets : "possui"
+    platforms ||--o{ game_assets : "para"
+    games ||--o{ cart_items : "referencia"
+    games ||--o{ order_items : "referencia"
+    games ||--o{ library_entries : "referencia"
+    orders ||--|{ order_items : "contém"
+    order_items ||--o| refunds : "gera"
+----
+
+[page-layout=landscape]
+<<<
+
+== Diagramas de Classes
+
+Os diagramas estão organizados em cinco domínios de negócio para manter a legibilidade em página A4.
+Atributos prefixados com `#` são protegidos.
+
 === Domínio 1: Usuários e Autenticação
 
 .Diagrama de Classes — Usuários e Autenticação
-[plantuml, pdfwidth=90%]
+[plantuml, pdfwidth=60%]
 ----
 @startuml
 skinparam classAttributeIconSize 0
 
 enum Role {
-  PLAYER
-  CREATOR
+  USER
   ADMINISTRATOR
-}
-
-interface IUserRepository {
-  + find_by_id(user_id: UUID) : User
-  + find_by_email(email: str) : User
-  + save(user: User) : User
-  + delete(user_id: UUID) : None
 }
 
 class User {
@@ -687,6 +804,13 @@ class User {
   + change_password(new_password: str) : None
 }
 
+interface UserRepository <<interface>> {
+  + find_by_id(user_id: UUID) : User
+  + find_by_email(email: str) : User
+  + save(user: User) : User
+  + delete(user_id: UUID) : None
+}
+
 class AuthService {
   + register(name: str, email: str, password: str) : User
   + login(email: str, password: str) : User
@@ -695,7 +819,7 @@ class AuthService {
 }
 
 User --> Role
-AuthService --> IUserRepository : usa
+AuthService --> UserRepository : usa
 @enduml
 ----
 
@@ -705,7 +829,7 @@ AuthService --> IUserRepository : usa
 === Domínio 2: Catálogo
 
 .Diagrama de Classes — Catálogo
-[plantuml, pdfwidth=90%]
+[plantuml, pdfwidth=65%]
 ----
 @startuml
 skinparam classAttributeIconSize 0
@@ -745,22 +869,16 @@ class GameAsset {
   + game_id: UUID
   + platform_id: UUID
   + file_size: int
+  + download_url: str
   + generate_signed_url(ttl: int) : str
 }
 
-interface ICatalogRepository {
+interface CatalogRepository <<interface>> {
   + find_by_id(game_id: UUID) : Game
   + find_by_creator(creator_id: UUID) : list[Game]
   + search(query: str, filters: dict) : list[Game]
-  + list_approved(cursor: str, limit: int) : tuple[list[Game], str]
+  + list_approved(cursor: str, limit: int) : tuple
   + save(game: Game) : Game
-}
-
-interface ICatalogService {
-  + get_game(game_id: UUID) : Game
-  + search_games(query: str, filters: dict) : list[Game]
-  + list_games(cursor: str, limit: int) : tuple[list[Game], str]
-  + register_game(creator_id: UUID, data: dict) : Game
 }
 
 class CatalogService {
@@ -774,8 +892,7 @@ Game --> GameStatus
 Game "1" *-- "0..*" GameAsset
 Game "0..*" o-- "0..*" Genre
 Game "0..*" o-- "0..*" Platform
-ICatalogService <|.. CatalogService
-CatalogService --> ICatalogRepository : usa
+CatalogService --> CatalogRepository : usa
 @enduml
 ----
 
@@ -834,29 +951,20 @@ class OrderItem {
   + price_paid: Decimal
 }
 
-interface ICartRepository {
+interface CartRepository <<interface>> {
   + find_by_user(user_id: UUID) : Cart
   + save(cart: Cart) : Cart
   + clear(user_id: UUID) : None
 }
 
-interface IOrderRepository {
+interface OrderRepository <<interface>> {
   + find_by_id(order_id: UUID) : Order
   + find_by_user(user_id: UUID) : list[Order]
   + save(order: Order) : Order
 }
 
-interface IPaymentGateway {
-  + charge(order: Order, payment_data: dict) : str
-  + refund(transaction_id: str, amount: Decimal) : bool
-}
-
-interface ILibraryService {
-}
-note right of ILibraryService : ver Domínio 4
-
-interface ICheckoutService {
-  + checkout(user_id: UUID, method: PaymentMethod, payment_data: dict) : Order
+interface PaymentGateway <<interface>> {
+  + charge(order: Order, data: dict) : None
 }
 
 class CheckoutService {
@@ -867,11 +975,9 @@ Cart "1" *-- "0..*" CartItem
 Order --> PaymentMethod
 Order --> OrderStatus
 Order "1" *-- "1..*" OrderItem
-ICheckoutService <|.. CheckoutService
-CheckoutService --> IPaymentGateway : usa
-CheckoutService --> ICartRepository : usa
-CheckoutService --> IOrderRepository : usa
-CheckoutService --> ILibraryService : usa
+CheckoutService --> CartRepository : usa
+CheckoutService --> OrderRepository : usa
+CheckoutService --> PaymentGateway : usa
 @enduml
 ----
 
@@ -899,29 +1005,11 @@ class LibraryEntry {
   + acquired_at: datetime
 }
 
-interface ILibraryRepository {
-  + find_by_user(user_id: UUID) : list[LibraryEntry]
-  + find_entry(user_id: UUID, game_id: UUID) : LibraryEntry
-  + save(entry: LibraryEntry) : LibraryEntry
-  + delete(entry_id: UUID) : None
-}
-
-interface ILibraryService {
-  + add_game(user_id: UUID, game_id: UUID) : LibraryEntry
-  + has_game(user_id: UUID, game_id: UUID) : bool
-  + remove_game(user_id: UUID, game_id: UUID) : None
-  + list_games(user_id: UUID) : list[LibraryEntry]
-}
-
 class LibraryService {
   + add_game(user_id: UUID, game_id: UUID) : LibraryEntry
   + has_game(user_id: UUID, game_id: UUID) : bool
   + remove_game(user_id: UUID, game_id: UUID) : None
   + list_games(user_id: UUID) : list[LibraryEntry]
-}
-
-interface IDownloadService {
-  + generate_download_url(user_id: UUID, game_id: UUID, platform_id: UUID) : str
 }
 
 class DownloadService {
@@ -938,14 +1026,16 @@ class Refund {
   + reject(reason: str) : None
 }
 
-interface IRefundPolicy {
-  + is_eligible(order_item_id: UUID) : bool
-  + rejection_reason(order_item_id: UUID) : str
+interface LibraryRepository <<interface>> {
+  + find_by_user(user_id: UUID) : list[LibraryEntry]
+  + find_entry(user_id: UUID, game_id: UUID) : LibraryEntry
+  + save(entry: LibraryEntry) : LibraryEntry
+  + delete(entry_id: UUID) : None
 }
 
-interface IRefundService {
-  + request(order_item_id: UUID, reason: str) : Refund
-  + process(refund_id: UUID) : None
+interface RefundPolicy <<interface>> {
+  + is_eligible(order_item_id: UUID) : bool
+  + rejection_reason(order_item_id: UUID) : str
 }
 
 class RefundService {
@@ -953,46 +1043,25 @@ class RefundService {
   + process(refund_id: UUID) : None
 }
 
-interface IPaymentGateway {
-}
-note right of IPaymentGateway : ver Domínio 3
-
-interface ICatalogRepository {
-}
-note right of ICatalogRepository : ver Domínio 2
-
-ILibraryService <|.. LibraryService
-IDownloadService <|.. DownloadService
-IRefundService <|.. RefundService
-LibraryService --> ILibraryRepository : usa
-DownloadService --> ILibraryService : usa
-DownloadService --> ICatalogRepository : usa
-RefundService --> IRefundPolicy : usa
-RefundService --> IPaymentGateway : usa
-RefundService --> ILibraryService : usa
+LibraryService --> LibraryRepository : usa
+DownloadService --> LibraryService : usa
+RefundService --> RefundPolicy : usa
 @enduml
 ----
 
 [page-layout=landscape]
 <<<
 
-=== Domínio 5: Moderação e Painel do Criador
+=== Domínio 5: Moderação e Painel de Vendas
 
-.Diagrama de Classes — Moderação e Painel do Criador
+.Diagrama de Classes — Moderação e Painel de Vendas
 [plantuml, pdfwidth=90%]
 ----
 @startuml
 skinparam classAttributeIconSize 0
 
-interface INotificationService {
-  + send(user_id: UUID, subject: str, body: str) : None
-}
-
-interface IModerationService {
-  + list_pending() : list[Game]
-  + approve(game_id: UUID, admin_id: UUID) : None
-  + reject(game_id: UUID, admin_id: UUID, reason: str) : None
-  + request_changes(game_id: UUID, admin_id: UUID, notes: str) : None
+interface NotificationService <<interface>> {
+  + send(user_id: UUID, subject: str, message: str) : None
 }
 
 class ModerationService {
@@ -1012,28 +1081,96 @@ class SalesMetrics {
   + period_end: date
 }
 
-interface ISalesDashboardService {
-  + get_metrics(creator_id: UUID, game_id: UUID, start: date, end: date) : list[SalesMetrics]
-  + export_csv(creator_id: UUID, start: date, end: date) : bytes
-}
-
 class SalesDashboardService {
   + get_metrics(creator_id: UUID, game_id: UUID, start: date, end: date) : list[SalesMetrics]
   + export_csv(creator_id: UUID, start: date, end: date) : bytes
 }
 
-interface ICatalogRepository {
-}
-note right of ICatalogRepository : ver Domínio 2
-
-interface IOrderRepository {
-}
-note right of IOrderRepository : ver Domínio 3
-
-IModerationService <|.. ModerationService
-ISalesDashboardService <|.. SalesDashboardService
-ModerationService --> INotificationService : usa
-ModerationService --> ICatalogRepository : usa
-SalesDashboardService --> IOrderRepository : usa
+ModerationService --> NotificationService : usa
 @enduml
+----
+
+[page-layout=portrait]
+<<<
+
+== Codificação das Classes do Sistema
+
+A implementação utiliza Python 3.13 com `dataclasses` para as entidades de domínio e `Enum` para tipos enumerados.
+
+=== Enumerações
+
+.vapor/enums.py
+[source,python]
+----
+include::vapor/enums.py[]
+----
+
+=== Domínio 1: Usuários e Autenticação
+
+.vapor/users.py
+[source,python]
+----
+include::vapor/users.py[]
+----
+
+=== Domínio 2: Catálogo
+
+.vapor/catalog.py
+[source,python]
+----
+include::vapor/catalog.py[]
+----
+
+=== Domínio 3: Carrinho e Pedidos
+
+.vapor/orders.py
+[source,python]
+----
+include::vapor/orders.py[]
+----
+
+=== Domínio 4: Biblioteca, Downloads e Reembolso
+
+.vapor/library.py
+[source,python]
+----
+include::vapor/library.py[]
+----
+
+=== Domínio 5: Moderação e Painel de Vendas
+
+.vapor/moderation.py
+[source,python]
+----
+include::vapor/moderation.py[]
+----
+
+== Codificação do Acesso ao Banco de Dados
+
+O acesso ao banco de dados utiliza PostgreSQL 17 via `psycopg` v3.
+O arquivo `schema.sql` define o esquema relacional (DDL) e o módulo `database.py` gerencia a conexão e a inicialização do banco.
+O módulo `repositories.py` implementa os repositórios de acesso a dados, utilizando SQL direto com _prepared statements_ parametrizados (`%s`) e `ON CONFLICT` para operações de _upsert_.
+
+=== Esquema do Banco de Dados
+
+.schema.sql
+[source,sql]
+----
+include::schema.sql[]
+----
+
+=== Conexão com o Banco de Dados
+
+.vapor/database.py
+[source,python]
+----
+include::vapor/database.py[]
+----
+
+=== Implementação dos Repositórios
+
+.vapor/repositories.py
+[source,python]
+----
+include::vapor/repositories.py[]
 ----

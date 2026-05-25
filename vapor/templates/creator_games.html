@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}My Games — Vapor{% endblock %}
+{% block content %}
+<h1>My Games</h1>
+<a href="/creator/games/new" class="btn btn-primary mb-1" style="display:inline-block;margin-bottom:1rem">+ New Game</a>
+
+{% if games %}
+<div class="card">
+  <table class="table">
+    <thead>
+      <tr><th>Title</th><th>Price</th><th>Status</th><th>Created</th></tr>
+    </thead>
+    <tbody>
+      {% for game in games %}
+      <tr>
+        <td><a href="/games/{{ game.id }}">{{ game.title }}</a></td>
+        <td>R$ {{ game.price }}</td>
+        <td><span class="badge badge-{{ game.status.value }}">{{ game.status.value }}</span></td>
+        <td>{{ game.created_at.strftime('%Y-%m-%d') }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p>You haven't created any games yet.</p>
+{% endif %}
+{% endblock %}

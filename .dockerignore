@@ -1,0 +1,13 @@
+.git
+.idea
+.claude
+.asciidoctor
+.venv
+.ruff_cache
+.make
+__pycache__
+*.png
+*.pdf
+*.db
+*.pyc
+fonts/

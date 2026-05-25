@@ -1,0 +1,40 @@
+[project]
+name = "vapor"
+version = "0.1.0"
+description = "Vapor — Plataforma de Venda e Distribuição Digital de Jogos"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn>=0.34.0",
+    "jinja2>=3.1.0",
+    "python-multipart>=0.0.18",
+    "itsdangerous>=2.2.0",
+    "psycopg[binary]>=3.2.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff",
+    "pytest",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py313"
+
+[tool.ruff.lint]
+select = [
+    "E", "W", "F", "B", "I", "N", "UP", "A", "C4",
+    "ISC", "PIE", "SIM", "RSE", "RET", "T20", "ERA",
+    "BLE", "PT", "ARG", "PL", "RUF",
+]
+ignore = ["E731", "PLR0913", "PLR0917", "PLR0915", "ARG001", "ARG002"]
+
+[tool.ruff.format]
+quote-style = "single"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["PLR0917", "PLR0913", "ARG001", "PLR2004"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

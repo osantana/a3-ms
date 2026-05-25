@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Orders — Vapor{% endblock %}
+{% block content %}
+<h1>Order History</h1>
+
+{% if orders %}
+<div class="card">
+  <table class="table">
+    <thead>
+      <tr><th>Order ID</th><th>Total</th><th>Payment</th><th>Status</th><th>Date</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+      <tr>
+        <td style="font-family:monospace;font-size:0.8rem">{{ order.id | string | truncate(13, True, '…') }}</td>
+        <td>R$ {{ order.total }}</td>
+        <td>{{ order.payment_method.value }}</td>
+        <td><span class="badge badge-{{ order.status.value }}">{{ order.status.value }}</span></td>
+        <td>{{ order.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+        <td><a href="/orders/{{ order.id }}">Details</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p>No orders yet. <a href="/catalog">Browse the catalog</a></p>
+{% endif %}
+{% endblock %}

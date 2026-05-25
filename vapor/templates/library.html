@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Library — Vapor{% endblock %}
+{% block content %}
+<h1>My Library</h1>
+
+{% if entries %}
+<div class="grid">
+  {% for entry in entries %}
+  {% set game = games[entry.game_id] %}
+  <div class="card">
+    <h3><a href="/games/{{ game.id }}">{{ game.title }}</a></h3>
+    <p style="font-size:0.8rem;color:#8f98a0">Acquired {{ entry.acquired_at.strftime('%Y-%m-%d') }}</p>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p>Your library is empty. <a href="/catalog">Browse the catalog</a></p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Moderation — Vapor{% endblock %}
+{% block content %}
+<h1>Moderation Queue</h1>
+
+{% if games %}
+{% for game in games %}
+<div class="card">
+  <h3>{{ game.title }}</h3>
+  <p>{{ game.description or 'No description.' }}</p>
+  <div class="mb-1">
+    {% for g in game.genres %}
+      <span class="badge badge-genre">{{ g.name }}</span>
+    {% endfor %}
+    {% for p in game.platforms %}
+      <span class="badge badge-genre">{{ p.name }}</span>
+    {% endfor %}
+  </div>
+  <p><strong>Price:</strong> R$ {{ game.price }}</p>
+  <p><strong>Release:</strong> {{ game.release_date or '—' }}</p>
+
+  <div class="mt-1" style="display:flex;gap:0.5rem;align-items:flex-start;flex-wrap:wrap">
+    <form method="post" action="/admin/approve/{{ game.id }}" class="inline">
+      <button type="submit" class="btn btn-success btn-sm">Approve</button>
+    </form>
+    <form method="post" action="/admin/reject/{{ game.id }}" class="inline" style="display:flex;gap:0.5rem">
+      <input name="reason" placeholder="Rejection reason" style="width:250px">
+      <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+    </form>
+  </div>
+</div>
+{% endfor %}
+{% else %}
+<p>No games pending review.</p>
+{% endif %}
+{% endblock %}

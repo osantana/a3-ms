@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}New Game — Vapor{% endblock %}
+{% block content %}
+<h1>Register New Game</h1>
+<div class="card" style="max-width:560px">
+  {% if error %}<div class="flash">{{ error }}</div>{% endif %}
+  <form method="post" action="/creator/games/new">
+    <div class="field">
+      <label for="title">Title</label>
+      <input id="title" name="title" required>
+    </div>
+    <div class="field">
+      <label for="description">Description</label>
+      <textarea id="description" name="description"></textarea>
+    </div>
+    <div class="field">
+      <label for="price">Price (BRL)</label>
+      <input id="price" name="price" type="number" step="0.01" min="0" value="0.00">
+    </div>
+    <div class="field">
+      <label for="release_date">Release Date</label>
+      <input id="release_date" name="release_date" type="date">
+    </div>
+    <div class="field">
+      <label for="genres">Genres (comma-separated)</label>
+      <input id="genres" name="genres" placeholder="RPG, Adventure, Action">
+    </div>
+    <div class="field">
+      <label for="platforms">Platforms (comma-separated)</label>
+      <input id="platforms" name="platforms" placeholder="Windows, macOS, Linux">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit for Review</button>
+  </form>
+</div>
+{% endblock %}

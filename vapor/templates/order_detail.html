@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Order {{ order.id | string | truncate(13, True, '…') }} — Vapor{% endblock %}
+{% block content %}
+<h1>Order Details</h1>
+<div class="card">
+  <p><strong>Order:</strong> <span style="font-family:monospace">{{ order.id }}</span></p>
+  <p><strong>Date:</strong> {{ order.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+  <p><strong>Payment:</strong> {{ order.payment_method.value }}</p>
+  <p><strong>Status:</strong> <span class="badge badge-{{ order.status.value }}">{{ order.status.value }}</span></p>
+
+  <table class="table mt-1">
+    <thead>
+      <tr><th>Game</th><th>Price</th></tr>
+    </thead>
+    <tbody>
+      {% for item in order.items %}
+      <tr>
+        <td><a href="/games/{{ item.game_id }}">{{ games[item.game_id].title }}</a></td>
+        <td>R$ {{ item.price_paid }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td><strong>Total</strong></td>
+        <td><strong class="price">R$ {{ order.total }}</strong></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+<a href="/orders">← Back to orders</a>
+{% endblock %}

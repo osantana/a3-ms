@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}{{ game.title }} — Vapor{% endblock %}
+{% block content %}
+<h1>{{ game.title }}</h1>
+<div class="card">
+  <p>{{ game.description or 'No description available.' }}</p>
+
+  <div class="mt-1 mb-1">
+    {% for g in game.genres %}
+      <span class="badge badge-genre">{{ g.name }}</span>
+    {% endfor %}
+    {% for p in game.platforms %}
+      <span class="badge badge-genre">{{ p.name }}</span>
+    {% endfor %}
+  </div>
+
+  <p><strong>Release date:</strong> {{ game.release_date or '—' }}</p>
+  <p class="price mt-1">
+    {% if game.price == game.price.__class__('0.00') %}
+      Free
+    {% else %}
+      R$ {{ game.price }}
+    {% endif %}
+  </p>
+
+  <div class="mt-1">
+    {% if user %}
+      {% if in_library %}
+        <span class="btn btn-success btn-sm" style="cursor:default">In your library ✓</span>
+      {% else %}
+        <form method="post" action="/cart/add/{{ game.id }}" class="inline">
+          <button type="submit" class="btn btn-primary">Add to Cart</button>
+        </form>
+      {% endif %}
+    {% else %}
+      <a href="/login" class="btn btn-primary">Login to buy</a>
+    {% endif %}
+  </div>
+</div>
+<a href="/catalog">← Back to catalog</a>
+{% endblock %}
